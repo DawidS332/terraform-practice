@@ -1,0 +1,7 @@
+#cloud-config
+
+runcmd: 
+  - apt-get update
+  - sudo apt-get -y install docker.io
+  - docker run -d --name=plex --net=host -e PUID=1000 -e PGID=1000 -e VERSION=docker --restart unless-stopped ghcr.io/linuxserver/plex
+  #I know this probably isn't the best way to do this, however cloud-init didn't like using packages, so this was the way i got it to install.
