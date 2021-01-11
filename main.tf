@@ -6,7 +6,7 @@ provider "azurerm" {
 }
 
 module "vmcreate_v2" {
-  source  = "C:/Tools/Visual Studio Terraform files/terraform task/modules/services/vmcreate_v2"
+  source  = "./modules/services/vmcreate_v2"
   vm_name = "terradebian"
 
 }
