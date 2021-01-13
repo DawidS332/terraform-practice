@@ -1,8 +1,8 @@
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "vm" {
   name                  = "${var.vm_name}-vm"
-  location              = azurerm_resource_group.resourcegroup.location
-  resource_group_name   = azurerm_resource_group.resourcegroup.name
+  location              = azurerm_resource_group.plexrg.location
+  resource_group_name   = azurerm_resource_group.plexrg.name
   network_interface_ids = [azurerm_network_interface.nic.id]
   size                  = "Standard_D2s_v3"
 
