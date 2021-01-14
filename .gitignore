@@ -10,3 +10,4 @@
 # .tfvars files
 *.tfvars
 .terraform-version
+sshkey.pem
