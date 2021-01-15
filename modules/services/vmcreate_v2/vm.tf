@@ -1,9 +1,9 @@
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "vm" {
   name                  = "${var.vm_name}-vm"
-  location              = azurerm_resource_group.plexrg.location
-  resource_group_name   = azurerm_resource_group.plexrg.name
-  network_interface_ids = [azurerm_network_interface.nic.id]
+  location              = azurerm_resource_group.this.location
+  resource_group_name   = azurerm_resource_group.this.name
+  network_interface_ids = [azurerm_network_interface.this.id]
   size                  = "Standard_D2s_v3"
 
   os_disk {
@@ -25,11 +25,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   admin_ssh_key {
     username   = var.admin_user
-    public_key = tls_private_key.example_ssh.public_key_openssh
+    public_key = tls_private_key.this.public_key_openssh
   }
 
   boot_diagnostics {
-    storage_account_uri = azurerm_storage_account.storageaccount.primary_blob_endpoint
+    storage_account_uri = azurerm_storage_account.this.primary_blob_endpoint
   }
 
   custom_data = base64encode(templatefile("${path.module}/cloud-config.yaml",{}))

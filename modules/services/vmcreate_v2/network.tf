@@ -1,29 +1,29 @@
 # Create network interface
-resource "azurerm_network_interface" "nic" {
+resource "azurerm_network_interface" "this" {
   name                = "${var.vm_name}-NIC"
-  location            = azurerm_resource_group.plexrg.location
-  resource_group_name = azurerm_resource_group.plexrg.name
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
   ip_configuration {
     name                          = "myNicConfiguration"
-    subnet_id                     = azurerm_subnet.subnet.id
+    subnet_id                     = azurerm_subnet.this.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.publicip.id
+    public_ip_address_id          = azurerm_public_ip.this.id
   }
 }
 
 #Create subnet
-resource "azurerm_subnet" "subnet" {
+resource "azurerm_subnet" "this" {
     name                 = "${var.vm_name}-subnet"
-    resource_group_name  = azurerm_resource_group.plexrg.name
-    virtual_network_name = azurerm_virtual_network.vnet.name
+    resource_group_name  = azurerm_resource_group.this.name
+    virtual_network_name = azurerm_virtual_network.this.name
     address_prefixes       = ["10.2.0.0/24"]
 }
 
 #Create Network Security Group
-resource "azurerm_network_security_group" "nsg" {
+resource "azurerm_network_security_group" "this" {
     name                = "${var.vm_name}-nsg"
-    location            = azurerm_resource_group.plexrg.location
-    resource_group_name = azurerm_resource_group.plexrg.name
+    location            = azurerm_resource_group.this.location
+    resource_group_name = azurerm_resource_group.this.name
 
     security_rule {
         name                       = "SSH"
@@ -51,22 +51,22 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 # Create public IPs
-resource "azurerm_public_ip" "publicip" {
+resource "azurerm_public_ip" "this" {
   name                = "${var.vm_name}-publicIP"
-  location            = azurerm_resource_group.plexrg.location
-  resource_group_name = azurerm_resource_group.plexrg.name
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
   allocation_method   = "Dynamic"
 }
 
 #Create Vnet for VM
-resource "azurerm_virtual_network" "vnet" {
+resource "azurerm_virtual_network" "this" {
     name                = "${var.vm_name}-vnet"
     address_space       = ["10.2.0.0/16"]
-    location            = azurerm_resource_group.plexrg.location
-    resource_group_name = azurerm_resource_group.plexrg.name
+    location            = azurerm_resource_group.this.location
+    resource_group_name = azurerm_resource_group.this.name
 }
 
-resource "tls_private_key" "example_ssh" {
+resource "tls_private_key" "this" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
